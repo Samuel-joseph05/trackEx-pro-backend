@@ -1,16 +1,29 @@
 
 
 import express from "express";
-import env from "dotenv";
-
-env.config();
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import expenseRoutes from "./routes/expenseRoutes.js";
+dotenv.config();
 
 const app=express();
 
 
-app.listen( process.env.PORT,()=>{
-    console.log(`Server is running on port http://localhost:${process.env.PORT}`);
+app.use(express.json());
+
+app.use("/api",expenseRoutes)
+//routes
+
+mongoose.connect(process.env.MONGODB_URI)
+.then(()=>{
+    console.log("MongoDB connected successfully");
+})
+
+const PORT=process.env.PORT || 5000;
+app.listen( PORT,()=>{
+    console.log(`Server is running on port http://localhost:${PORT}`);
    
 }
 
 )
+
