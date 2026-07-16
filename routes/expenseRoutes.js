@@ -8,12 +8,14 @@ const router=express.Router()
 
 //expense register route
 router.post("/expenseRegister",expenseRegister)
-
-//user register route
-router.post("/register",userRegister)
 router.get("/expenses",getExpense)
 router.delete("/expense/:id",deleteExpense)
 router.put("/expense/:id",updateExpense)
+
+//user register route
+router.post("/register",userRegister)
+
+
 
 
 export default router;
