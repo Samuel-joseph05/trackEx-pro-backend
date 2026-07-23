@@ -4,6 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import expenseRoutes from "./routes/expenseRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import cors from "cors"
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cors())
 
 app.use("/api",expenseRoutes)
+app.use("/api",userRoutes)
 
 //routes
 
