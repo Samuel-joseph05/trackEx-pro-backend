@@ -9,12 +9,11 @@ export const deleteExpenseService=async(id)=>{
   return await Expense.findByIdAndDelete(id)
 }
 
-export const getExpenseServive=async()=>{
-  return await Expense.find()
+export const getExpenseServive=async(userId)=>{
+  return await Expense.find({user:userId})
 }
 
-export const updateExpenseService=async(id,expenseData) =>{
-  return await Expense.findByIdAndUpdate(id,expenseData,{new:true})
+export const updateExpenseService=async(id,userId,expenseData) =>{
+  return await Expense.findByIdAndUpdate({ _id: id,user: userId},expenseData,{new:true})
 }
-
 
