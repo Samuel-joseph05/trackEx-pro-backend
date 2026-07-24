@@ -14,6 +14,7 @@ export const expenseRegister = async (req, res) => {
       amount,
       category,
       date,
+      user: req.user.id, // Logged-in user's ID
     });
     return res
       .status(201)
@@ -21,8 +22,9 @@ export const expenseRegister = async (req, res) => {
         message: "Expense registered successfully",
         expense: newExpense,
       });
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message});
   }
 };
 
@@ -46,11 +48,12 @@ return res.status(200).json({message:"expense deleted ",deletedExpense})
 //get expense controller used to get expense
 export const getExpense=async(req,res)=>{
   try{
-const expenses=await getExpenseServive()
+const expenses=await getExpenseServive(req.user.id)
+console.log(req.user);//new line
 return res.status(200).json(expenses)
   }
-  catch{
-
+  catch(err){
+return res.status(500).json({message:err.message})
   }
 }
 
@@ -58,7 +61,7 @@ return res.status(200).json(expenses)
 export const updateExpense=async(req,res)=>{
   try{
 const {id}=req.params;
-const updatedExpense=await updateExpenseService(id,req.body)
+const updatedExpense=await updateExpenseService(id,req.user._id,req.body)
 console.log(updatedExpense)
 if(!updatedExpense)
   return res.status(404).json({message:" expense not found"})
