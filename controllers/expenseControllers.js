@@ -9,6 +9,8 @@ import {
 export const expenseRegister = async (req, res) => {
   try {
     const { title, amount, category, date } = req.body;
+      console.log("req.user:", req.user);
+      
     const newExpense = await expenseServiceRegister({
       title,
       amount,
@@ -61,7 +63,7 @@ return res.status(500).json({message:err.message})
 export const updateExpense=async(req,res)=>{
   try{
 const {id}=req.params;
-const updatedExpense=await updateExpenseService(id,req.user._id,req.body)
+const updatedExpense=await updateExpenseService(id,req.user.id,req.body)
 console.log(updatedExpense)
 if(!updatedExpense)
   return res.status(404).json({message:" expense not found"})
