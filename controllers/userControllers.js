@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 import {
   userServiceLogin,
   userServiceRegister,
@@ -31,10 +33,31 @@ export const userRegister = async (req, res) => {
     }
 
     const newUser = await userServiceRegister({ name, email, phone, password });
+
+    const token = jwt.sign(
+      {
+        id: newUser._id,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      },
+    );
+    console.log("Register Token Payload:");
+    console.log(jwt.verify(token, process.env.JWT_SECRET));
+
     // console.log(newUser);
-    return res
-      .status(201)
-      .json({ message: "User registered successfully", user: newUser });
+    return res.status(201).json({
+      message: "User registered successfully",
+      token,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+         phone: newUser.phone,
+         password: newUser.password,
+      },
+    });
   } catch (err) {
     if (
       err.message === "Email already exists" ||
@@ -48,19 +71,24 @@ export const userRegister = async (req, res) => {
   }
 };
 
-
-
 export const loginUser = async (req, res) => {
   try {
     const { phone, password } = req.body;
 
     if (!phone || !password) {
-      return res.status(400).json({ sucess: false, message: "Phone and password are required" });
+      return res
+        .status(400)
+        .json({ sucess: false, message: "Phone and password are required" });
     }
     //call the service
     const result = await userServiceLogin({ phone, password });
 
-    return res.status(200).json({ success: true, message: "Login successfully", token: result.token, user: result.user });
+    return res.status(200).json({
+      success: true,
+      message: "Login successfully",
+      token: result.token,
+      user: result.user,
+    });
   } catch (error) {
     // Handle specific errors
     if (
