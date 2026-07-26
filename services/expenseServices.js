@@ -5,8 +5,8 @@ export const expenseServiceRegister = async (expenseData) => {
   return await Expense.create(expenseData);
 };
 
-export const deleteExpenseService=async(id)=>{
-  return await Expense.findByIdAndDelete(id)
+export const deleteExpenseService=async(id,userId)=>{
+  return await Expense.findByIdAndDelete({ _id: id, user: userId })
 }
 
 export const getExpenseServive=async(userId)=>{
@@ -16,4 +16,5 @@ export const getExpenseServive=async(userId)=>{
 export const updateExpenseService=async(id,userId,expenseData) =>{
   return await Expense.findByIdAndUpdate({ _id: id,user: userId},expenseData,{new:true})
 }
+
 
