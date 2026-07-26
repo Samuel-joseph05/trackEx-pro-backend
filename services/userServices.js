@@ -21,15 +21,10 @@ const hashedPassword=await bcrypt.hash(password,10)
   const newUser = await User.create({
     ...userData,
     password: hashedPassword,
-    role: "user", // optional
+    // role: "user", // optional
   });
   
-  return {
-  id: newUser._id,
-  name: newUser.name,
-  email: newUser.email,
-  phone: newUser.phone,
-};
+  return newUser;
 };
 
 export const userServiceLogin = async (userData) => {
@@ -49,6 +44,8 @@ export const userServiceLogin = async (userData) => {
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn: "1h",});
 
+console.log("Login Token Payload:");
+console.log(jwt.verify(token, process.env.JWT_SECRET));
   return {
     token,
     user: {
