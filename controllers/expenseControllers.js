@@ -1,6 +1,7 @@
 import {
   deleteExpenseService,
   expenseServiceRegister,
+  getDashboardExpenseService,
   getExpenseServive,
   updateExpenseService,
 } from "../services/expenseServices.js";
@@ -75,3 +76,13 @@ return res.status(500).json({message:"server error",err})
 }
 
 
+
+export const getDashboard=async(req,res)=>{
+  try{
+const dashboard=await getDashboardExpenseService(req.user.id)
+return res.status(200).json(dashboard)
+  }
+  catch(err)
+  {
+    return res.status(500).json({message:err.message})
+}}
