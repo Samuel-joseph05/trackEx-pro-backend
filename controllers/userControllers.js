@@ -43,8 +43,8 @@ export const userRegister = async (req, res) => {
         expiresIn: "1h",
       },
     );
-    console.log("Register Token Payload:");
-    console.log(jwt.verify(token, process.env.JWT_SECRET));
+    // console.log("Register Token Payload:");
+    // console.log(jwt.verify(token, process.env.JWT_SECRET));
 
     // console.log(newUser);
     return res.status(201).json({
@@ -55,7 +55,6 @@ export const userRegister = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
          phone: newUser.phone,
-         password: newUser.password,
       },
     });
   } catch (err) {
