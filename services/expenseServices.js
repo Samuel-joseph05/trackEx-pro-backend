@@ -9,8 +9,20 @@ export const deleteExpenseService=async(id,userId)=>{
   return await Expense.findByIdAndDelete({ _id: id, user: userId })
 }
 
-export const getExpenseServive=async(userId)=>{
-  return await Expense.find({user:userId})
+export const getExpenseServive=async(userId,search,category)=>{
+
+  const query ={user: userId}
+
+  if(search){
+    query.title={
+      $regex:search,
+      $options: "i",
+    }
+  }
+  if(category && category !== "All"){
+    query.category=category;
+  }
+  return await Expense.find(query)
 }
 
 export const updateExpenseService=async(id,userId,expenseData) =>{
