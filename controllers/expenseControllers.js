@@ -51,8 +51,9 @@ return res.status(200).json({message:"expense deleted ",deletedExpense})
 //get expense controller used to get expense
 export const getExpense=async(req,res)=>{
   try{
-const expenses=await getExpenseServive(req.user.id)
-console.log(req.user);//new line
+    const {search,category} = req.query
+const expenses=await getExpenseServive(req.user.id,search,category)
+// console.log(req.user);//new line
 return res.status(200).json(expenses)
   }
   catch(err){
