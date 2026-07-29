@@ -1,3 +1,4 @@
+import { getMonthlySummaryService } from "../services/dashboardService.js";
 import {
   deleteExpenseService,
   expenseServiceRegister,
@@ -87,3 +88,14 @@ return res.status(200).json(dashboard)
   {
     return res.status(500).json({message:err.message})
 }}
+
+export const getMonthlySummary=async(req,res)=>{
+
+  try{
+const summary=await getMonthlySummaryService(req.user.id);
+return res.status(200).json(summary)
+  }
+  catch(err){
+return res.status(500).json({message:"server Error"})
+  }
+}
