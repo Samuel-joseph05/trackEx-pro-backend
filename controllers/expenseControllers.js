@@ -11,7 +11,7 @@ import {
 export const expenseRegister = async (req, res) => {
   try {
     const { title, amount, category, date } = req.body;
-      console.log("req.user:", req.user);
+      // console.log("req.user:", req.user);
       
     const newExpense = await expenseServiceRegister({
       title,
