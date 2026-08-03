@@ -1,39 +1,14 @@
-
-
-import express from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
-import expenseRoutes from "./routes/expenseRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import cors from "cors"
+
+import app from "./app.js";
+import connectDB from "./config/db.js";
+
 dotenv.config();
 
-const app=express();
+const PORT = process.env.PORT || 5000;
 
+connectDB();
 
-app.use(express.json());
-app.use(cors(
-    {
-        origin: "http://localhost:3000",
-        credentials:true
-    }
-))
-
-app.use("/api",expenseRoutes)
-app.use("/api",userRoutes)
-
-//routes
-
-mongoose.connect(process.env.MONGODB_URI)
-.then(()=>{
-    console.log("MongoDB connected successfully");
-})
-
-const PORT=process.env.PORT || 5000;
-app.listen( PORT,()=>{
-    console.log(`Server is running on port http://localhost:${PORT}`);
-   
-}
-
-)
-
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
