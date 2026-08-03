@@ -9,7 +9,7 @@ export const deleteExpenseService=async(id,userId)=>{
   return await Expense.findByIdAndDelete({ _id: id, user: userId })
 }
 
-export const getExpenseServive=async(userId,search,category)=>{
+export const getExpenseServive=async(userId,search,category,sort,page)=>{
 
   const query ={user: userId}
 
@@ -19,10 +19,58 @@ export const getExpenseServive=async(userId,search,category)=>{
       $options: "i",
     }
   }
+
+
   if(category && category !== "All"){
     query.category=category;
   }
-  return await Expense.find(query)
+
+
+   let sortOption = {};
+   
+   switch (sort) {
+    case "newest":
+      sortOption = { date: -1 };
+      break;
+
+    case "oldest":
+      sortOption = { date: 1 };
+      break;
+
+    case "highest":
+      sortOption = { amount: -1 };
+      break;
+
+    case "lowest":
+      sortOption = { amount: 1 };
+      break;
+
+    case "az":
+      sortOption = { title: 1 };
+      break;
+
+    case "za":
+      sortOption = { title: -1 };
+      break;
+
+    default:
+      sortOption = { date: -1 };
+  }
+
+const limit=6
+const currentPage=Number(page) || 1;
+const skip=(currentPage - 1 ) * limit;
+
+const totalExpenses=await Expense.countDocuments(query)
+const totalPages=Math.ceil(totalExpenses / limit)
+
+  const expenses = await Expense.find(query).sort(sortOption).skip(skip).limit(limit);
+  return {
+  expenses,
+  currentPage,
+  totalPages,
+  totalExpenses,
+};
 }
 
 export const updateExpenseService=async(id,userId,expenseData) =>{
