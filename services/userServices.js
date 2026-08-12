@@ -44,8 +44,8 @@ export const userServiceLogin = async (userData) => {
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn: "1h",});
 
-console.log("Login Token Payload:");
-console.log(jwt.verify(token, process.env.JWT_SECRET));
+// console.log("Login Token Payload:");
+// console.log(jwt.verify(token, process.env.JWT_SECRET));
   return {
     token,
     user: {
