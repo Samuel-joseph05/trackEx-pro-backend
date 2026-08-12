@@ -36,7 +36,7 @@ export const expenseRegister = async (req, res) => {
 export const deleteExpense=async(req,res)=>{
   try{
 const {id}=req.params;
-const deletedExpense=await deleteExpenseService(id)
+const deletedExpense=await deleteExpenseService(id,req.user.id)
 if(!deletedExpense){
   return res.status(404).json({message:"Expense not found"})
 }
@@ -67,7 +67,7 @@ export const updateExpense=async(req,res)=>{
   try{
 const {id}=req.params;
 const updatedExpense=await updateExpenseService(id,req.user.id,req.body)
-console.log(updatedExpense)
+// console.log(updatedExpense)
 if(!updatedExpense)
   return res.status(404).json({message:" expense not found"})
   return res.status(200).json(updatedExpense)
