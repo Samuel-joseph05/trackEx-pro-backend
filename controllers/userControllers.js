@@ -40,7 +40,7 @@ export const userRegister = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "5m",// Set token expiration time
       },
     );
     // console.log("Register Token Payload:");
@@ -101,7 +101,7 @@ export const loginUser = async (req, res) => {
     }
 
     // Handle other errors
-    console.error("Login error:", error);
+    // console.error("Login error:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
