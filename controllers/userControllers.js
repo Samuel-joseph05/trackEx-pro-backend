@@ -40,7 +40,7 @@ export const userRegister = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "5m",// Set token expiration time
+        expiresIn: "1h",// Set token expiration time
       },
     );
     // console.log("Register Token Payload:");
