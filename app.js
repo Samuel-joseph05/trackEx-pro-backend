@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+
 import expenseRoutes from "./routes/expenseRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
@@ -9,17 +10,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://track-ex-pro.vercel.app",
-    ],
+    origin: ["http://localhost:3000", "https://track-ex-pro.vercel.app"],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-
 
 app.get("/", (req, res) => {
   res.send("Welcome to TrackEx API");
