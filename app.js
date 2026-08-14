@@ -15,6 +15,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.send("Welcome to TrackEx API");
+});
+
 app.use("/api", expenseRoutes);
 app.use("/api", userRoutes);
 
