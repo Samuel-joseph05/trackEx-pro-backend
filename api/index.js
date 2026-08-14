@@ -6,8 +6,6 @@ const handler = async (req, res) => {
   return app(req, res);
 };
 
-app.get("/", (req, res) => {
-  res.send("Welcome to TrackEx API");
-});
+
 
 export default handler;
