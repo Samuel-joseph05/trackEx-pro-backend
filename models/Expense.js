@@ -24,5 +24,7 @@ const expenseSchema = new mongoose.Schema({
     ref:"User",
     required:true,
   }
+},{
+  timestamps:true
 });
 export default mongoose.model("Expense", expenseSchema);
