@@ -73,9 +73,25 @@ const totalPages=Math.ceil(totalExpenses / limit)
 };
 }
 
-export const updateExpenseService=async(id,userId,expenseData) =>{
-  return await Expense.findByIdAndUpdate({ _id: id,user: userId},expenseData,{new:true})
-}
+export const updateExpenseService = async (id, userId, expenseData) => {
+  const { title, amount, category, date } = expenseData;
+
+  const updateData = {
+    title,
+    amount,
+    category,
+    date,
+  };
+
+  return await Expense.findOneAndUpdate(
+    { _id: id, user: userId },
+    updateData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+};
 
 export const getDashboardExpenseService = async (userId) => {
   const expenses = await Expense.find({ user: userId });
