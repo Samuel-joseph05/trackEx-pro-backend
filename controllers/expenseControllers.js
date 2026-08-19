@@ -73,7 +73,12 @@ if(!updatedExpense)
   return res.status(200).json(updatedExpense)
   }
 catch(err){
-return res.status(500).json({message:"server error",err})
+console.error("Expense update error:", err);
+
+return res.status(500).json({
+  success: false,
+  message: "Internal server error",
+});
   }
 }
 
