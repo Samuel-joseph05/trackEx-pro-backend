@@ -3,6 +3,7 @@ import cors from "cors";
 
 import expenseRoutes from "./routes/expenseRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import salaryRoutes from "./routes/salaryRoutes.js";
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.get("/", (req, res) => {
 
 app.use("/api", expenseRoutes);
 app.use("/api", userRoutes);
+app.use("/api", salaryRoutes);
 
 export default app;
